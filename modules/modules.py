@@ -55,10 +55,12 @@ def get_image_count(folder_path):
 
 # Cung cấp id mới
 def get_id(root):
-    directories = os.listdir(root)
-    count = sum(1 for directory in directories if os.path.isdir(os.path.join(root, directory)))
-    return count + 1
-
+    try:
+        directories = os.listdir(root)
+        count = sum(1 for directory in directories if os.path.isdir(os.path.join(root, directory)))
+        return count + 1
+    except:
+        return 1
 
 # Đém tất cả ảnh 
 def get_count_images_in_directory(directory):
