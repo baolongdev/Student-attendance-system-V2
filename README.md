@@ -4,6 +4,7 @@
 
 <table>
 <tr>
+<p>Video hướng dẫn</p>
 <td width="400">
   <a href="https://www.youtube.com/watch?v=J8AUoJnYRo8">
     <img src="/img/home.png" />
