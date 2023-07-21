@@ -5,7 +5,4 @@ __pycache__/
 models/
 
 !.gitignore
-models/*
-
-# Exception: Include the '.gitkeep' file within the 'models' directory
-!models/.gitkeep
+!datasets/.gitkeep
