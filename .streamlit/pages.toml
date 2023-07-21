@@ -1,0 +1,9 @@
+[[pages]]
+path = "main.py"
+name = "Home"
+icon = "⭐"
+
+[[pages]]
+path = "other_pagesproject/main.py"
+name = "Student-attendance-system"
+icon = "📹"
