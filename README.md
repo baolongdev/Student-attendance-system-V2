@@ -2,7 +2,14 @@
 
 ## Giải pháp điểm danh đầu giờ bằng nhận diện khuôn mặt sử dụng thuật toán deeplearning và trí tuệ nhân tạo
 
-<img src="./img/home.png"  width="50%" height="auto"/>
+<table>
+<tr>
+<td width="48%">
+  <a href="https://www.youtube.com/watch?v=J8AUoJnYRo8">
+    <img src="/img/home.png" />
+  </a>
+</id>
+</table>
 
 ### 1. Mô tả
 
