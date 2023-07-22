@@ -38,6 +38,8 @@ class VideoReader(FaceDetection, FaceRecognition, DatabaseHandler):
             check = self.check_anway
             if check >= 1:
                 for data in data_current:
+                    if not data:
+                        break
                     id, name, _ = data
                     id = str(id)
                     if not self.check_status(id):

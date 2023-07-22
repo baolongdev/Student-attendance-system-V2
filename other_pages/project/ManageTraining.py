@@ -36,6 +36,20 @@ def ProcessingDatabase(id, class_name, name):
     db.insert_data("students", data)
     db.disconnect()
 
+
+def Evaluation(model, history):
+    fig1, ax = plt.subplots()
+    ax.plot(history.history['accuracy'])
+    ax.plot(history.history['val_accuracy'])
+    ax.axhline(y=0.4, color='r', linestyle='--')
+    ax.grid()
+    ax.set_title("Model Accuracy")
+    ax.set_ylabel("Accuracy")
+    ax.set_xlabel("Epochs")
+    ax.legend(['train', 'validation'])
+    st.pyplot(fig1)
+
+
 # Train model
 def CreateModel(X_train, y_train, X_test, y_test, num_classes, info):
     modelpath = get_from_control_reference("current_dir") / "assets" / "models"
@@ -87,16 +101,18 @@ def CreateModel(X_train, y_train, X_test, y_test, num_classes, info):
     augmenter.fit(X_train)
     with st.spinner("Training..."):
     # Train the model with data augmentation and callbacks
-        model.fit(augmenter.flow(X_train, y_train, batch_size=32),
+        history = model.fit(augmenter.flow(X_train, y_train, batch_size=32),
                 epochs=12,
                 validation_data=(X_test, y_test),
                 callbacks=[early_stopping, model_checkpoint],
                 verbose=1)
 
-    model.save(modelpath)
+    model.save(f"{modelpath}/model.h5")
     
     with info:
         st.success("Hoàn tất")
+        
+    Evaluation(model, history)
 
 # Xử lý dữ liệu trước khi Train
 def Processing(data, info):
@@ -155,7 +171,7 @@ def TrainModel(datasets, progressbar, info, label, image):
            
     save_label_dict_to_file(label_dict)
     shuffle(data)  # Shuffle the data in-place
-    # Processing(data, info)
+    Processing(data, info)
     
 
 # Đọc ảnh từ camera -> lưu trữ
