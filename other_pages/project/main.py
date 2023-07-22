@@ -5,7 +5,19 @@ from other_pages.project import *
 
 
 def main():
-    current_dir = return_control_reference()["current_dir"]
+    current_dir = get_from_control_reference("current_dir")
+    try:
+        if st.session_state.SelectClass:
+            pathDatabase = current_dir / "assets" / "database" / f'dataclass_{get_from_control_reference("ClassInput")}.db'
+            add_to_control_reference("pathDatabase", pathDatabase)
+            db = DatabaseHandler(pathDatabase)
+            db.connect()
+            columns = "id TEXT PRIMARY KEY, class TEXT, name TEXT, status TEXT, time TEXT, date TEXT"
+            db.create_table("students", columns)
+            db.disconnect()
+    except:
+        pass
+    
     InitPageSetting(st, current_dir,
                     "Student attendance system", "📹", "project.css")
     Custom_Code(st, """ 
@@ -21,8 +33,6 @@ def main():
     with Training:
         st.markdown("#")
         ManageTraining()
-        
-
 
 if __name__ == '__main__':
     main()

@@ -1,14 +1,14 @@
-import json
 from streamlit_webrtc import webrtc_streamer
 from other_pages.project.lib import *
-import streamlit as st
-from modules import *
 import matplotlib.pyplot as plt
 from random import shuffle
+from scipy import ndimage
+import streamlit as st
+from modules import *
+import json
 import time
 import cv2
 import os
-from scipy import ndimage
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
@@ -29,7 +29,12 @@ def save_label_dict_to_file(label_dict):
         json.dump(label_dict, label_file)
     print("Label dictionary saved to 'label.txt' file.")
 
-
+def ProcessingDatabase(id, class_name, name):
+    db = DatabaseHandler(get_from_control_reference("pathDatabase"))
+    db.connect()
+    data = (id, class_name, name, None, None, None)
+    db.insert_data("students", data)
+    db.disconnect()
 
 # Train model
 def CreateModel(X_train, y_train, X_test, y_test, num_classes, info):
@@ -133,6 +138,7 @@ def TrainModel(datasets, progressbar, info, label, image):
     for dirpath, _, filenames in os.walk(datasets):
         id, name = os.path.basename(dirpath).split("_") if "_" in os.path.basename(dirpath) else (None, None)
         label_dict[id] = name
+        ProcessingDatabase(id, get_from_control_reference("ClassInput"), name)
         for filename in filenames:
             image_path = os.path.join(dirpath, filename)
             
@@ -149,7 +155,7 @@ def TrainModel(datasets, progressbar, info, label, image):
            
     save_label_dict_to_file(label_dict)
     shuffle(data)  # Shuffle the data in-place
-    Processing(data, info)
+    # Processing(data, info)
     
 
 # Đọc ảnh từ camera -> lưu trữ
@@ -318,6 +324,8 @@ def ManageTraining():
     DataColection(element1, "Thu thập dữ liệu khuôn mặt", datasets)
     Training(element2, "Training Model", datasets)
     VisualizeData(element3, "Visualization", dataVisual, datasets)
+    
+    
     pass
 
 

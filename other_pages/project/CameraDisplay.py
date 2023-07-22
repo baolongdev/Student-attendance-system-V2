@@ -30,6 +30,7 @@ def ColOption():
     add_to_control_reference("Face_detection", st.session_state.Face_detection)
     add_to_control_reference("time_delay_check_faces", st.session_state.time_delay_check_faces)
     add_to_control_reference("listfacerecog", [])
+    add_to_control_reference("ClassInput", st.session_state.SelectClass)
     # ModeCheck(ModeInput)
 
 
@@ -43,7 +44,7 @@ def ColCamera():
         )
     with col2:
         parameterContainer = st.empty()
-        pass
+        info = st.empty()      
 
     with parameterContainer.container():
         with st.expander("Thông số kỹ thuật"):
@@ -51,17 +52,17 @@ def ColCamera():
             st.markdown("#")
             fps_placeholder = st.empty()
             st.markdown("#")
-            faces_placeholder = st.empty()                        
+            faces_placeholder = st.empty() 
+                     
 
     if ctx.video_processor:
         prev_fps_time = time.time()
         prev_checkFaceDetect_time = time.time()
+        ctx.video_processor.setInfo(info)
         while ctx.state.playing:
             if not ctx.state.playing:
-                print("hello")
+                ctx.video_processor.disconnect()
                 break
-            else:
-                print(ctx.state.playing, ctx.state)
             time_diff = time.time() - prev_fps_time
             time_checkFaceDetect = time.time() - prev_checkFaceDetect_time
             add_to_control_reference("time_checkFaceDetect", time_checkFaceDetect)
@@ -74,8 +75,6 @@ def ColCamera():
             if time_checkFaceDetect >= get_from_control_reference("time_delay_check_faces"):
                 prev_checkFaceDetect_time = time.time()
             time.sleep(0.1)
-            
-
 
 def CameraDisplay():
     option, camera = st.columns([1, 4], gap="medium")

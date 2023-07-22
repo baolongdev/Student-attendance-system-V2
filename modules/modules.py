@@ -1,10 +1,11 @@
 import os
-import streamlit as st
-from PIL import Image
-import numpy as np
-from modules.controls import *
 import json
+import datetime
+import numpy as np
+from PIL import Image
+import streamlit as st
 from tensorflow import keras
+from modules.controls import *
 
 def InitPageSetting(st, path, PAGE_NAME, PAGE_ICON, name_file_css="", name_file_js=""):
     current_dir = path
@@ -112,3 +113,19 @@ def ImagePath2Array(image_path):
     img_grayscale = img.convert('L')  # Convert to grayscale
     image_array = np.array(img_grayscale)
     return image_array
+
+def get_time():
+    now = datetime.datetime.now()
+    hour = now.hour
+    minute = now.minute
+    second = now.second
+    data = f"{hour}:{minute}:{second}"
+    return data
+
+def get_date():
+    now = datetime.datetime.now()
+    year = now.year
+    month = now.month
+    day = now.day
+    data = f'{year}:{month}:{day}'
+    return data

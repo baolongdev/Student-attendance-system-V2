@@ -1,1 +1,1 @@
-{"null": null, "1": "L\u00ea B\u1ea3o Long", "2": "Ph\u01b0\u01a1ng Anh", "3": "H\u1ea1o Nhi\u00ean", "4": "T\u01b0\u1eddng Nghi"}
+{"null": null, "1": "L\u00ea B\u1ea3o Long"}
