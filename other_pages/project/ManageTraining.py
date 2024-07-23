@@ -38,15 +38,27 @@ def ProcessingDatabase(id, class_name, name):
 
 
 def Evaluation(model, history):
-    fig1, ax = plt.subplots()
-    ax.plot(history.history['accuracy'])
-    ax.plot(history.history['val_accuracy'])
-    ax.axhline(y=0.4, color='r', linestyle='--')
-    ax.grid()
-    ax.set_title("Model Accuracy")
-    ax.set_ylabel("Accuracy")
-    ax.set_xlabel("Epochs")
-    ax.legend(['train', 'validation'])
+    fig1, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6))
+    
+    # Plot Accuracy
+    ax1.plot(history.history['accuracy'], label='Training Accuracy')
+    ax1.plot(history.history['val_accuracy'], label='Validation Accuracy')
+    ax1.axhline(y=0.4, color='r', linestyle='--')
+    ax1.grid()
+    ax1.set_title("Model Accuracy")
+    ax1.set_ylabel("Accuracy")
+    ax1.set_xlabel("Epochs")
+    ax1.legend()
+
+    # Plot Loss
+    ax2.plot(history.history['loss'], label='Training Loss')
+    ax2.plot(history.history['val_loss'], label='Validation Loss')
+    ax2.grid()
+    ax2.set_title("Model Loss")
+    ax2.set_ylabel("Loss")
+    ax2.set_xlabel("Epochs")
+    ax2.legend()
+
     st.pyplot(fig1)
 
 
@@ -274,9 +286,9 @@ def Training(element, title, datasets):
         with col21:
             st.text(f"Tổng {TotalImage} bức ảnh")
             st.markdown("#")
-            st.slider('Train:', 0, TotalImage, int(TotalImage/2), key="TrainCount")
+            st.slider('Train:', 0, TotalImage, int(TotalImage * 8/10), key="TrainCount")
             st.markdown("#")
-            st.slider('Test:', 0, TotalImage, int(TotalImage/2), key="TestCount")
+            st.slider('Test:', 0, TotalImage, int(TotalImage * 2/10), key="TestCount")
             st.markdown("#")
             btn_start = st.button("Run", "btn_start", use_container_width=True)
             st.markdown("#")

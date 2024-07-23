@@ -39,6 +39,9 @@ class DatabaseHandler:
             print(f"Error creating table: {e}")
 
     def insert_data(self, table_name, data):
+        if data is None or data[0] is None:
+            print("Invalid data or 'id' is None. Nothing to insert.")
+            return
         try:
             with self._get_connection() as conn:
                 query = f"INSERT INTO {table_name} VALUES ({', '.join(['?' for _ in data])})"

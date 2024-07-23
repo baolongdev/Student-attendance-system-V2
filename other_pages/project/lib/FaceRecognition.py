@@ -28,6 +28,7 @@ class FaceRecognition():
 
         # Get the predicted class index
         predicted_class_index = np.argmax(model_out)
+        # print("predicted_class_index: ",predicted_class_index)
         confidence_percent = round(model_out[predicted_class_index] * 100, 2)
         id = predicted_class_index
         name = self.label[str(predicted_class_index)]

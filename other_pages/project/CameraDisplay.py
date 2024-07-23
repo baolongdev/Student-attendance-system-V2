@@ -20,6 +20,12 @@ def ColOption():
         key="SelectClass"
     )
     st.markdown("#")
+    modelSelect = st.selectbox(
+        "Chọn Model:",
+        ["None","model.h5", "best_model.h5"],
+        key="modelSelect"
+    )
+    st.markdown("#")
     st.radio(
         "Face detection:",
         ["default","face_detection"],
@@ -31,6 +37,7 @@ def ColOption():
     add_to_control_reference("time_delay_check_faces", st.session_state.time_delay_check_faces)
     add_to_control_reference("listfacerecog", [])
     add_to_control_reference("ClassInput", st.session_state.SelectClass)
+    add_to_control_reference("modelSelect", st.session_state.modelSelect)
     # ModeCheck(ModeInput)
 
 

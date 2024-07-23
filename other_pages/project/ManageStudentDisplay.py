@@ -20,10 +20,11 @@ def get_vi_day_of_week(day):
     }
     return vi_day_of_week.get(day, "")
 
+
 def Student(element, title, data):
     with element.expander(f'{title}: {st.session_state.SelectClass}'):
         col1, col2 = st.columns(2)
-        class_size = len(data) - 1
+        class_size = len(data)
         present_count = sum(int(row['status']) for row in data if row['status'] == '1')
         absent_count = class_size - present_count
         with col1:
@@ -38,6 +39,10 @@ def Student(element, title, data):
             day_of_week = get_vi_day_of_week(selected_date.strftime('%A'))
             with day_of_week_preloader:
                 st.text(f"{day_of_week}")
+                
+            st.markdown("#")
+            export = st.empty()
+
             
         st.markdown("#")
         with st.container():
@@ -48,7 +53,6 @@ def Student(element, title, data):
 
             # Process data to populate lists
             for row in data:
-                print(row)
                 id_value = row['id']
                 name_value = row['name']
                 status_value = row['status']
@@ -72,6 +76,14 @@ def Student(element, title, data):
 
             # Display the DataFrame in Streamlit
             st.dataframe(df, use_container_width=True, hide_index=True)
+    with export:
+        csv = convert_df(df)
+        st.download_button(
+            label="export",
+            data=csv,
+            file_name='data.csv',
+            mime='text/csv',
+        )
 
 def rows_to_dict_list(rows, column_names):
     dict_list = []

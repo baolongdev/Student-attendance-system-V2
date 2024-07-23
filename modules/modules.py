@@ -4,17 +4,17 @@ import datetime
 import numpy as np
 from PIL import Image
 import streamlit as st
-from tensorflow import keras
 from modules.controls import *
+from tensorflow import keras
 
 def InitPageSetting(st, path, PAGE_NAME, PAGE_ICON, name_file_css="", name_file_js=""):
     current_dir = path
     CSS_MAIN = current_dir / "assets" / "styles" / "main.css"
     js_MAIN = current_dir / "assets" / "js" / "main.js"
     st.set_page_config(PAGE_NAME, PAGE_ICON)
-    Custom_Code(st, """
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>            
-    """)
+    # Custom_Code(st, """
+    #     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>            
+    # """)
     if name_file_css:
         css_file = current_dir/"assets" / "styles" / name_file_css
         Custom_CSS(st, CSS_MAIN)
@@ -96,7 +96,7 @@ def save_image(datasets, img_array, getid, imgCount):
 
     
 def load_model():
-    modelpath = get_from_control_reference("current_dir") / "assets" / "models"
+    modelpath = get_from_control_reference("current_dir") / "assets" / "models" / get_from_control_reference("modelSelect")
     model = keras.models.load_model(modelpath)
     return model
 
@@ -129,3 +129,7 @@ def get_date():
     day = now.day
     data = f'{year}:{month}:{day}'
     return data
+
+def convert_df(df):
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_csv()
